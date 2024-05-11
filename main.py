@@ -1,6 +1,10 @@
 from flask import Flask, request, jsonify
 import joblib
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
 
@@ -25,4 +29,6 @@ def training():
       return jsonify({"error": f"Erro ao realizar o treinamento: {e}"}), 500
 
 if __name__ == '__main__':
-  app.run(debug=True, port=3008)
+    # Use the PORT environment variable if available, otherwise default to 3008
+    port = int(os.getenv("PORT", 3008))
+    app.run(debug=True, port=port)
